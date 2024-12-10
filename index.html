@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador de Trading - Paper Trading</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .container {
+            width: 90%;
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0 15px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e7f3fe;
+            border: 1px solid #b3d8ff;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: bold;
+            color: #333;
+        }
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+            font-size: 0.9em;
+            margin-top: auto;
+        }
+        footer span {
+            color: #4CAF50;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Simulador de Trading (Paper Trading)</h1>
+
+        <label for="precoCompra">Preço de Compra (R$):</label>
+        <input type="number" id="precoCompra" placeholder="Digite o preço de compra">
+
+        <label for="precoVenda">Preço de Venda (R$):</label>
+        <input type="number" id="precoVenda" placeholder="Digite o preço de venda">
+
+        <label for="quantidade">Quantidade de Ações:</label>
+        <input type="number" id="quantidade" placeholder="Digite a quantidade de ações">
+
+        <button onclick="calcularResultado()">Calcular Resultado</button>
+
+        <div class="result" id="resultado"></div>
+    </div>
+
+    <footer>
+        <p>Apoie nosso projeto doando um PIX! ❤️</p>
+        <p>Chave Pix: <span>CPF 172.613.947-69</span> - Banco Bradesco - Natalino Brito Barbosa</p>
+    </footer>
+
+    <script>
+        function calcularResultado() {
+            const precoCompra = parseFloat(document.getElementById('precoCompra').value);
+            const precoVenda = parseFloat(document.getElementById('precoVenda').value);
+            const quantidade = parseInt(document.getElementById('quantidade').value);
+
+            if (isNaN(precoCompra) || isNaN(precoVenda) || isNaN(quantidade) || quantidade <= 0) {
+                document.getElementById('resultado').innerText = "Por favor, preencha todos os campos corretamente!";
+                return;
+            }
+
+            const lucroPrejuizo = (precoVenda - precoCompra) * quantidade;
+            const resultadoDiv = document.getElementById('resultado');
+
+            if (lucroPrejuizo > 0) {
+                resultadoDiv.style.color = "green";
+                resultadoDiv.innerText = `Lucro: R$ ${lucroPrejuizo.toFixed(2)}`;
+            } else if (lucroPrejuizo < 0) {
+                resultadoDiv.style.color = "red";
+                resultadoDiv.innerText = `Prejuízo: R$ ${Math.abs(lucroPrejuizo).toFixed(2)}`;
+            } else {
+                resultadoDiv.style.color = "#333";
+                resultadoDiv.innerText = "Sem lucro ou prejuízo. Preços de compra e venda são iguais.";
+            }
+        }
+    </script>
+</body>
+</html>
